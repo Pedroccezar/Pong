@@ -1,0 +1,1 @@
+Simple project inspired by the classic Pong, released by Atari. The game features two player-controlled paddles that bounce a ball, including collision detection, scoring system, and automatic round reset after each point.

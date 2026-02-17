@@ -31,9 +31,9 @@ teclado = Window.get_keyboard()
 #restart
 restart = False
 gameover = False
+gamewinner = False
 pontoesq = 0
 pontodir = 0 
-vencedor = ""
 
 #GameMode
 game_mode = "pause"
@@ -46,8 +46,6 @@ while True:
     if  not restart == True and game_mode == "jogando":
         ball.x += velox * janela.delta_time()
         ball.y += veloy * janela.delta_time()
-    
-    print(game_mode)
 
     padbot.y += velby
     
@@ -103,15 +101,18 @@ while True:
             velby = -120 * janela.delta_time()
         elif veloy == 0:
             velby = 0 * janela.delta_time()
-    
+        
+        timer = 0
         #Verificar GameOver
         if pontoesq == 3:
-            gameover = True
-            vencedor = "Jogador da Direita venceu!"
+            gamewinner = True
+            game_mode = "End"
+            timer = janela.time_elapsed()
         elif pontodir == 3:
             gameover = True
-            vencedor = "Jogador da Esquerda venceu!"
-    
+            game_mode = "End"
+            timer = janela.time_elapsed()
+
         #Placar 
         janela.draw_text(str(pontodir),200,30, size=40, color =(255,255,255))
         janela.draw_text(str(pontoesq),600,30, size=40, color =(255,255,255))
@@ -119,6 +120,14 @@ while True:
     #GameOver
     if gameover:
         janela.draw_text("Game Over", 250, 150, size=60, color =(255,255,255))
-        janela.draw_text(vencedor, 225, 225, size=30, color =(255,255,255))
+        janela.draw_text("Jogador da Esquerda venceu!", 205, 225, size=30, color =(255,255,255))
+    elif gamewinner:
+        janela.draw_text("Game Winner", 225, 150, size=60, color =(255,255,255))
+        janela.draw_text("Você venceu!", (janela.width/2)-100, 225, size=30, color =(255,255,255))
+
+    clock = janela.time_elapsed() - timer 
+    if game_mode == "End" and clock >= 5000:
+        janela.close()
+        
     
     janela.update()

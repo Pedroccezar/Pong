@@ -1,0 +1,2 @@
+# Arquivo de cache
+PPlay/__pycache__

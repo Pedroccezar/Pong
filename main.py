@@ -22,7 +22,7 @@ veloy = 200
 padbot = Sprite(images + "pad1.png")
 pad2 = Sprite(images + "pad2.png")
 padbot.set_position(2,(janela.height - padbot.height)/2)
-pad2.set_position(janela.width - pad2.width,(janela.height - pad2.height)/2)
+pad2.set_position(janela.width - pad2.width - 2,(janela.height - pad2.height)/2)
 velby = 0
 
 #Teclado
@@ -35,15 +35,20 @@ pontoesq = 0
 pontodir = 0 
 vencedor = ""
 
-#teste
+#GameMode
+game_mode = "pause"
 
 #Gerando a janela
 while True:
 
-    if  not restart == True:
+    if teclado.key_pressed("space"):
+        game_mode = 'jogando'
+    if  not restart == True and game_mode == "jogando":
         ball.x += velox * janela.delta_time()
         ball.y += veloy * janela.delta_time()
     
+    print(game_mode)
+
     padbot.y += velby
     
     fundo.draw()
@@ -65,6 +70,7 @@ while True:
             restart = True
             veloy = 0
             pontodir += 1
+            game_mode = "pause"
         elif ball.x <= 0:
             ball.set_position(janela.width/2 - ball.width ,janela.height/2 - ball.height)
             padbot.set_position(2,(janela.height - padbot.height)/2)
@@ -72,15 +78,16 @@ while True:
             restart = True
             veloy = 0
             pontoesq += 1
+            game_mode = "pause"
 
         if teclado.key_pressed("space") and restart:
                 restart = False
                 veloy = 200
 
         #Movendo o pad2
-        if teclado.key_pressed("up") and pad2.y >= 0: 
+        if teclado.key_pressed("up") and pad2.y >= 0 and game_mode == "jogando": 
             pad2.move_key_y(200 * janela.delta_time())
-        if teclado.key_pressed("down") and (pad2.y + pad2.height) <= janela.height:
+        if teclado.key_pressed("down") and (pad2.y + pad2.height) <= janela.height and game_mode == "jogando":
             pad2.move_key_y(200 * janela.delta_time())
 
         #Colisao bolinha
@@ -90,7 +97,7 @@ while True:
             velox *= -1
 
         #Controle do bot
-        if veloy > 0 and (padbot.y + padbot.height) <= janela.height:
+        if veloy > 0 and (padbot.y + padbot.height) <= janela.height and game_mode == "jogando":
             velby = 120 * janela.delta_time()
         elif veloy < 0 and padbot.y >=0 :
             velby = -120 * janela.delta_time()

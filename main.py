@@ -3,22 +3,24 @@ from PPlay.gameimage import GameImage
 from PPlay.sprite import *
 from random import *
 
+images = "Assets/images/"
+
 #Janela
 janela = Window(800,600)
 janela.set_title("Pong")
 
 #fundo da janela
-fundo = GameImage('fundo.png')
+fundo = GameImage(images + "fundo.png")
 
 #bolinha
-ball = Sprite("ball.png")
+ball = Sprite(images + "ball.png")
 ball.set_position(janela.width/2 - ball.width ,janela.height/2 - ball.height)
 velox = 200
 veloy = 200
 
 #Pads
-padbot = Sprite("pad1.png")
-pad2 = Sprite("pad2.png")
+padbot = Sprite(images + "pad1.png")
+pad2 = Sprite(images + "pad2.png")
 padbot.set_position(2,(janela.height - padbot.height)/2)
 pad2.set_position(janela.width - pad2.width,(janela.height - pad2.height)/2)
 velby = 0
